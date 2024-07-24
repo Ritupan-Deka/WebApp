@@ -1,0 +1,106 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #000000;
+    /* overflow-y: hidden; */
+}
+
+.nanum-gothic-regular {
+    margin-top: -4rem;
+    font-family: "Nanum Gothic", sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    padding: 10px;
+    color: #f2f0f0;
+    opacity: 0.85;
+}
+
+.container {
+    background: #212020;
+    height: 500px;
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3%;
+}
+
+button {
+    /* position: absolute;
+    left: 50%;
+    top: 75%; */
+    width: 5em;
+    height: 2em;
+    /* margin-top: 20px;
+    margin-left: -2.5em; */
+    padding: .5em .5em;
+    color: #bbb4b4;
+    background: #262525;
+    border: 1px solid #929090;
+    border-radius: 20px;
+    font-size: 1em;
+    cursor: pointer;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.7);
+    transition: box-shadow .4s;
+}
+
+button:hover {
+    background-color: rgb(66, 90, 28);
+    /* background: #07fb50; */
+    box-shadow: 0 0 30px 5px rgba(202, 198, 198, 0.75);
+}
+
+textarea {
+
+    margin: 20px 0 -40px 0;
+    height: 250px;
+    width: 85%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ede6e6;
+    font-family: "Nanum Gothic", sans-serif;
+    /* font-size: medium; */
+    font-style: italic;
+}
+
+.upload {
+    width: 85%;
+    /* flex-direction: row;
+    justify-content: space-around; */
+}
+
+.download {
+    /* position: absolute; */
+    top: 76%;
+    width: 7em;
+    height: 2em;
+    margin-left: 420px;
+    padding: .5em .5em;
+    color: #bbb4b4;
+    background: #cc1010;
+    border: 1px solid #929090;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.7);
+    transition: box-shadow .4s;
+}
+
+.download:hover {
+    background: #940505;
+    box-shadow: 0 0 10px 0px rgba(72, 21, 21, 0.75);
+}
+
+input {
+    border: 2px solid rgb(225, 222, 222);
+    color: rgb(201, 195, 195);
+    margin-right: 7em;
+}

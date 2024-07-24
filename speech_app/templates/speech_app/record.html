@@ -1,0 +1,137 @@
+<!-- {% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <title>Recorded Transcript</title>
+    <link rel="stylesheet" href="{% static 'css/record.css' %}">
+</head>
+<body>
+    <div class="nanum-gothic-regular">This is for recorded transcription</div>
+    <div class="container">
+        <form id="upload-form" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">UPLOAD</button>
+        </form>
+
+        <textarea id="transcript-area" placeholder="Your transcribed text will appear here.." readonly>{{ transcript }}</textarea>
+
+        <button style="display: none;" class="download" id="downloadBTN" onclick="downloadTranscript()">DOWNLOAD</button>
+    </div>
+
+    <a style="color: rgb(43, 144, 195);" href="http://127.0.0.1:8000/">Go back to previous page</a>
+
+    <script>
+        function downloadTranscript() {
+            const transcript = document.getElementById('transcript-area').value;
+            const blob = new Blob([transcript], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'transcription.txt';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        document.getElementById('upload-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            fetch('', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                const transcriptArea = document.getElementById('transcript-area');
+                transcriptArea.value = data.transcript;
+                if (data.transcript.trim()) {
+                    document.getElementById('downloadBTN').style = "display:block;";
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html> -->
+
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <title>Recorded Transcript</title>
+    <link rel="stylesheet" href="{% static 'css/record.css' %}">
+</head>
+
+<body>
+    <div class="nanum-gothic-regular">This is for recorded transcription</div>
+    <div class="container">
+        <form id="upload-form" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">UPLOAD</button>
+        </form>
+
+        <textarea id="transcript-area" placeholder="Your transcribed text will appear here.." readonly></textarea>
+
+        <button style="display: none;" class="download" id="downloadBTN" onclick="downloadTranscript()">DOWNLOAD</button>
+    </div>
+
+    <a style="color: rgb(43, 144, 195);" href="http://127.0.0.1:8000/">Go back to previous page</a>
+
+    <script>
+        function downloadTranscript() {
+            const transcript = document.getElementById('transcript-area').value;
+            const blob = new Blob([transcript], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'transcription.txt';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        document.getElementById('upload-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            fetch('', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+                .then(response => {
+                    const reader = response.body.getReader();
+                    const decoder = new TextDecoder();
+                    return reader.read().then(function processText({ done, value }) {
+                        if (done) {
+                            return;
+                        }
+                        const text = decoder.decode(value, { stream: true });
+                        const transcriptArea = document.getElementById('transcript-area');
+                        transcriptArea.value += text;
+                        if (transcriptArea.value.trim()) {
+                            document.getElementById('downloadBTN').style.display = 'block';
+                        }
+                        return reader.read().then(processText);
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+
+</html>
